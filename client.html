@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        
+        <div id="app">
+			<button v-on:click="clickButton">Nice try!</button>
+        </div>
+        
+        <!--
+		<script src="client.js"></script>
+		-->
+		<script>
+		var app = new Vue({
+			el: '#app',
+			methods: {
+				clickButton: function(val) {
+					console.log('Button clicked');
+					const socket = new WebSocket('ws://localhost:8080');
+					socket.addEventListener('open', function (event) {
+					socket.send('vogel');
+					});
+					socket.addEventListener('message', function (event) {
+					console.log('Message from server ', event.data);
+					});
+				}
+			}
+		});
+		</script>
+    </body>
+</html>

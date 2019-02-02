@@ -8,14 +8,12 @@
         <div id="app">
             <p>{{ message }}<p>
 			<button v-on:click="naisu">Nice try!</button>
-			<ul>
-				<list-item
-					v-for="it in itemList"
-					v-bind:litem="it"
-					v-bind:key="it.id">
-				</list-item>
-				<list-item-test></list-item-test>
-			</ul>
+			<list-item
+				v-for="it in itemList"
+				v-bind:litem="it"
+				v-bind:key="it.id">
+			</list-item>
+			<list-item-test></list-item-test>
         </div>
         
         <script src="vue.js"></script>

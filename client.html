@@ -6,7 +6,8 @@
     <body>
         
         <div id="app">
-			<button v-on:click="clickButton">Nice try!</button>
+			<input v-model="wsmessage" placeholder="Your best guess">
+			<button v-on:click="clickButton(wsmessage)">Good luck!</button>
         </div>
         
         <!--
@@ -15,12 +16,15 @@
 		<script>
 		var app = new Vue({
 			el: '#app',
+			data: {
+			wsmessage : ''
+			},
 			methods: {
 				clickButton: function(val) {
 					console.log('Button clicked');
 					const socket = new WebSocket('ws://localhost:8080');
 					socket.addEventListener('open', function (event) {
-					socket.send('vogel');
+					socket.send(val);
 					});
 					socket.addEventListener('message', function (event) {
 					console.log('Message from server ', event.data);

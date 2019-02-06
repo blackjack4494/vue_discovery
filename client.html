@@ -8,26 +8,40 @@
         <div id="app">
 			<input v-model="wsmessage" placeholder="Your best guess">
 			<button v-on:click="clickButton(wsmessage)">Good luck!</button>
+			<list-item
+				v-for="it in r_messages"
+				v-bind:litem="it">
+			</list-item>
         </div>
         
         <!--
 		<script src="client.js"></script>
 		-->
 		<script>
+		const socket = new WebSocket('ws://localhost:8080');
+		//socket.addEventListener('open', function (event) { console.log('blaa') };
+		
+		Vue.component('list-item', {
+		props: ['litem'],
+		template: '<li>{{ litem }}</li>'
+		});
+		
 		var app = new Vue({
 			el: '#app',
 			data: {
-			wsmessage : ''
+			wsmessage : '',
+			r_messages : []
 			},
 			methods: {
 				clickButton: function(val) {
 					console.log('Button clicked');
-					const socket = new WebSocket('ws://localhost:8080');
-					socket.addEventListener('open', function (event) {
+					if (socket.readyState === 1) {
 					socket.send(val);
-					});
+					//this.r_messages.push(val);
+					}
 					socket.addEventListener('message', function (event) {
-					console.log('Message from server ', event.data);
+					console.log('Message from server ',  event.data);
+					//app.r_messages.push(event.data);
 					});
 				}
 			}
